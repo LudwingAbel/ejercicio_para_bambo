@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido para ingresar a la compra</title>
+    <meta name="description" content="Este es el sitio para ingresar al login">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <section class="bg-gray-200">
+        <div class="min-h-screen flex items-center justify-center bg-gray-100">
+         <form id="login-form" class="bg-white p-8 rounded-lg shadow-md w-96">
+           <h2 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
+    
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-gray-700">Email</label>
+             <input type="email" id="email_form" required 
+             class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+           </div>
+
+           <div class="mb-6">
+             <label class="block text-sm font-medium text-gray-700">Contraseña</label>
+             <input type="password" id="password_form" required 
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+             </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition">
+               Ingresar
+            </button>
+         </form>
+       </div>
+    </section>
+</body>
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // Tu configuración que ya obtuviste
+        const firebaseConfig = {
+            apiKey: "AIzaSyC8Wrts8dkHIMRVAknb1XIdC0t8o3tmryM",
+            authDomain: "proyecto-test-validacion.firebaseapp.com",
+            projectId: "proyecto-test-validacion",
+            storageBucket: "proyecto-test-validacion.firebasestorage.app",
+            messagingSenderId: "1075785642281",
+            appId: "1:1075785642281:web:dbb777535797fdaa1c4738",
+            measurementId: "G-TK8671FLZ3"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Lógica del Formulario
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email_form').value;
+            const password = document.getElementById('password_form').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("Ingreso exitoso:", userCredential.user.email);
+                    // REDIRECCIÓN A LA TIENDA
+                    window.location.href = "store-test.html"; 
+                })
+                .catch((error) => {
+                    alert("Error al ingresar: " + error.message);
+                });
+        });
+    </script>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba tecnica SmartBambo</title>
+    <meta name="description" content="Bienvenido a la parte de compra, donde aqui estan los tres productos segmentados">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <section class="max-w-screen-sm ml-auto mr-auto mt-8 mb-4 md:max-w-screen-xl">
+      <div class="m-auto flex flex-col md:flex-row">
+        <div class="w-full md:w-1/3 m-3 bg-gray-100 p-4 rounded-xl shadow-md">
+           <div class="mb-3">
+              <img id="image_product_one" src="/images/audifonos-bluetooth-multipunto-anc.webp" alt="Imagen del producto 1">
+           </div>
+           <h3 class="text-lg font-medium md:text-2xl" id="title_product_one">
+              Producto 1
+           </h3>
+           <div class="mt-1 mb-1 flex">
+               <div id="precio_normal" class="mt-0 mb-0 ml-1 mr-1">
+                  <span class="text-base text-black-400 line-through font-medium">$1500</span>
+               </div>
+               <div id="precio_descuento_one" class="mt-0 mb-0 ml-1 mr-1">
+                  <span class="text-base text-red-500 font-medium">
+                     $1200
+                  </span>
+               </div>
+           </div>
+           <div id="color_options" class="mt-1 mb-1">
+               <select class="bg-transparent text-base p-1 rounded-xl border-black-300 font-medium" name="Opciones de colores" id="option_color">
+                  <option value="">Selecciona alguna opcion </option>
+                  <option value="rojo">Rojo</option>
+                  <option value="negro">Negro</option>
+                  <option value="blanco">Blanco</option>
+                  <option value="azul">Azul</option>
+                  <option value="gris">Gris</option>
+               </select>
+           </div>
+           <p class="text-base font-normal mt-4">
+              Producto 1, dolor sit amet consectetur adipisicing elit.
+              Beatae facilis nobis recusandae quas non, ipsa numquam eius, 
+              officiis pariatur accusantium iure libero voluptatibus 
+              expedita possimus!
+           </p>
+           <div class="mt-4 mb-4 w-full">
+             <button class="p-2 bg-black text-white rounded-xl hover:bg-orange-200 hover:text-black hover:duration-100 ease-linear delay-100" data-id="1">
+                Comprar este producto
+             </button>
+           </div>
+        </div>
+        <div class="w-full md:w-1/3 m-3 bg-gray-100 p-4 rounded-xl shadow-md">
+            <div class="mb-3">
+              <img src="/images/6_b7816593-9cac-4137-b872-857a18f614a6.webp" alt="Imagen del producto 2" id="image_product_two">
+           </div>
+            <h3 class="text-lg font-medium md:text-2xl" id="title_product_two">
+              Producto 2
+           </h3>
+           <div class="mt-1 mb-1 flex">
+               <div id="precio_normal" class="mt-0 mb-0 ml-1 mr-1">
+                  <span class="text-base text-black-400 line-through font-medium">$950</span>
+               </div>
+               <div id="precio_descuento_two" class="mt-0 mb-0 ml-1 mr-1">
+                  <span class="text-base text-red-500 font-medium">
+                     $725
+                  </span>
+               </div>
+           </div>
+           <div id="size_options" class="mt-1 mb-1">
+               <select class="bg-transparent text-base p-1 rounded-xl border-black-300 font-medium" name="Opciones de colores" id="option_tallas">
+                  <option value="">Selecciona una talla</option>
+                  <option value="extrachica">Extra chica</option>
+                  <option value="chica">Chica</option>
+                  <option value="mediana">Mediana</option>
+                  <option value="grande">Grande</option>
+                  <option value="extragrande">Extra grande</option>
+               </select>
+           </div>
+           <p class="text-base font-normal mt-4">
+              Producto 2, dolor sit amet consectetur adipisicing elit.
+              Beatae facilis nobis recusandae quas non, ipsa numquam eius, 
+              officiis pariatur accusantium iure libero voluptatibus 
+              expedita possimus!
+           </p>
+           <div class="mt-4 mb-4 w-full">
+             <button class="p-2 bg-black text-white rounded-xl hover:bg-orange-200 hover:text-black hover:duration-900 ease-linear delay-100" data-id="2">
+                Comprar este producto
+             </button>
+           </div>
+        </div>
+        <div class="w-full md:w-1/3 m-3 bg-gray-100 p-4 rounded-xl shadow-md">
+            <div class="mb-3">
+              <img src="/images/audifonos-bluetooth-multipunto-anc.webp" alt="Imagen del producto 3" id="image_product_three">
+           </div>
+           <h3 class="text-lg font-medium md:text-2xl" id="title_product_three">
+              Producto 3
+           </h3>
+           <div class="mt-1 mb-1 flex">
+               <div id="precio_normal" class="mt-0 mb-0 ml-1 mr-1">
+                  <span class="text-base text-black-400 line-through font-medium">$2500</span>
+               </div>
+               <div id="precio_descuento_three" class="mt-0 mb-0 ml-1 mr-1">
+                  <span class="text-base text-red-500 font-medium">
+                     $1950
+                  </span>
+               </div>
+           </div>
+           <div id="color_options" class="mt-1 mb-1">
+               <select class="bg-transparent text-base p-1 rounded-xl border-black-300 font-medium" name="Opciones de colores" id="option_color_two">
+                  <option value="">Selecciona alguna opcion </option>
+                  <option value="rojo">Rojo</option>
+                  <option value="negro">Negro</option>
+                  <option value="blanco">Blanco</option>
+                  <option value="azul">Azul</option>
+                  <option value="gris">Gris</option>
+               </select>
+           </div>
+           <p class="text-base font-normal mt-4">
+              Producto 3, dolor sit amet consectetur adipisicing elit.
+              Beatae facilis nobis recusandae quas non, ipsa numquam eius, 
+              officiis pariatur accusantium iure libero voluptatibus 
+              expedita possimus!
+           </p>
+           <div class="mt-4 mb-4 w-full">
+             <button class="p-2 bg-black text-white rounded-xl hover:bg-orange-200 hover:text-black hover:duration-900 ease-linear delay-100" data-id="3">
+                Comprar este producto
+             </button>
+           </div>
+        </div>
+      </div>
+    </section>
+</body>
+</html>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const buyButtons = document.querySelectorAll('button[data-id]');
+
+    buyButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            
+            // 1. Identificar el Select y el Sufijo correspondiente
+            let selectId = id === "1" ? "option_color" : (id === "2" ? "option_tallas" : "option_color_two");
+            let suffix = id === "1" ? "one" : (id === "2" ? "two" : "three");
+
+            const selectElement = document.getElementById(selectId);
+            const variant = selectElement ? selectElement.value : "Único";
+
+            // 2. VALIDACIÓN CRÍTICA: Si el select existe y no tiene valor (está en la opción por defecto)
+            if (selectElement && (variant === "" || variant === "Selecciona una opción")) {
+                alert("⚠️ Por favor, selecciona una Talla o Color antes de continuar.");
+                
+                // Efecto visual opcional: resaltar el select en rojo
+                selectElement.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+                selectElement.focus();
+                
+                return; // DETIENE TODO: No guarda en localStorage y no redirige
+            }
+
+            // 3. Si pasó la validación, quitamos el error visual y creamos el producto
+            if(selectElement) selectElement.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
+
+            const product = {
+                id: id,
+                name: document.getElementById(`title_product_${suffix}`).innerText,
+                price: parseFloat(document.getElementById(`precio_descuento_${suffix}`).querySelector('span').innerText.replace('$', '').replace(',', '')),
+                image: document.getElementById(`image_product_${suffix}`).src,
+                variant: variant,
+                quantity: 1
+            };
+
+            // 4. Guardar y Redirigir
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.location.href = 'carrito.html';
+        });
+    });
+});
+</script>

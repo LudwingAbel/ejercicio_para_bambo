@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra</title>
+    <meta name="description" content="Este es la pagina para finalizar la comrpa">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <section class="flex flex-col md:flex-row mt-5 mb-5 ml-auto mr-auto max-w-screen-sm md:max-w-screen-xl">
+        <div class="bg-gray-100 rounded-xl w-2/3 ml-1 mr-1">
+            <h2 class="font-bold text-2xl text-center mt-2 mb-2">
+                Llena tus datos para finalizar tu compra 
+            </h2>
+            <form action="" class="p-4 flex flex-col">
+                <label for="nombre" class="text-black font-medium text-md mt-1 mb-1">
+                    Nombre completo
+                </label>
+                <input type="text" name="nombre" id="nombre_usuario"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+                <label for="email" class="text-black font-medium text-md mt-1 mb-1">
+                    Correo Electrónico
+                </label>
+                <input type="email" name="email" id="emal_usuario" 
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+                <label for="telefono" class="text-black font-medium text-md mt-1 mb-1">
+                    Numero de contacto
+                </label>
+                <input type="tel" name="telefono" id="telefono_usuario" 
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" pattern="[0-9]{10}" 
+                maxlength="10" 
+                minlength="10" >
+                <label for="address" class="text-black font-medium text-md mt-1 mb-1">
+                    Direccion
+                </label>
+                <input type="text" id="direccion_usuario"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" name="address">
+                <label for="colonia" class="text-black font-medium text-md mt-1 mb-1">
+                    Colonia
+                </label>
+                <input type="text" id="colonia_usuario"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500" name="colonia">
+                <label for="codigo_postal" class="text-black font-medium text-md mt-1 mb-1">
+                    Código Postal
+                </label>
+                <input type="text" inputmode="numeric" pattern="\d*" maxlength="5" placeholder="Ej. 28001" id="codigo_postal_usuario" name="codigo_postal"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+                <input type="button" value="Enviar" class="w-1/3 bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition mt-4 mb-4">
+            </form>
+        </div>
+        <div id="details" class="w-1/3 p-4 m-1 bg-gray-200 rounded-xl shadow-md">
+            <h2>
+               Resumen de la compra y productos
+            </h2>
+            <div class="mt-4 mb-4 border-t pt-4">
+              <h3 class="text-lg font-bold text-gray-800">Resumen de tu pedido:</h3>
+    
+               <p class="text-sm text-gray-600">Producto:</p>
+               <p id="nombre_product_final" class="mb-2 text-md font-medium text-blue-600">Cargando...</p>
+    
+                <p class="text-sm text-gray-600">Total a pagar:</p>
+                <p id="precio_producto_total_final" class="mb-2 text-md font-medium text-green-600">Cargando...</p>
+    
+               <p class="text-sm text-gray-600">Detalles:</p>
+               <p id="option_value_product_final" class="mb-2 text-md font-medium text-gray-700">Cargando...</p>
+          </div>
+         </div>
+         <div id="modal_exito" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+           <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm w-full text-center">
+             <div class="text-green-500 text-6xl mb-4">
+                <i class="fa-solid fa-check"></i>
+             </div>
+             <h3 class="text-2xl font-bold mb-2">¡Compra Exitosa!</h3>
+                <p class="text-gray-600 mb-6">Tu pedido ha sido registrado y pronto nos pondremos en contacto contigo.</p>
+              <button onclick="cerrarModal()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                  Aceptar y volver
+              </button>
+             </div>
+        </div>
+    </section>
+</body>
+</html>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // 1. CONFIGURACIÓN FIREBASE
+    const firebaseConfig = {
+        apiKey: "AIzaSyC8Wrts8dkHIMRVAknb1XIdC0t8o3tmryM",
+        authDomain: "proyecto-test-validacion.firebaseapp.com",
+        projectId: "proyecto-test-validacion",
+        storageBucket: "proyecto-test-validacion.firebasestorage.app",
+        messagingSenderId: "1075785642281",
+        appId: "G-TK8671FLZ3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // --- A. CARGA DE DATOS DEL PRODUCTO (INMEDIATA) ---
+        const productData = localStorage.getItem('selectedProduct');
+        if (!productData) {
+            console.warn("No se encontró producto en localStorage");
+            return;
+        }
+
+        const product = JSON.parse(productData);
+        const totalCalculado = product.price * product.quantity;
+
+        // Referencias a tus IDs de texto
+        const displayNombre = document.getElementById('nombre_product_final');
+        const displayPrecio = document.getElementById('precio_producto_total_final');
+        const displayOpcion = document.getElementById('option_value_product_final');
+        const displayTotalResumen = document.getElementById('precio_total_products');
+
+        // Inyectamos los datos reales
+        if (displayNombre) displayNombre.textContent = `${product.name} (x${product.quantity})`;
+        if (displayPrecio) displayPrecio.textContent = `$${totalCalculado.toLocaleString('es-MX')}`;
+        if (displayOpcion) displayOpcion.textContent = `Variante: ${product.variant}`;
+        if (displayTotalResumen) displayTotalResumen.textContent = `$${totalCalculado.toLocaleString('es-MX')}`;
+
+        // --- B. AUTOCOMPLETADO DE CÓDIGO POSTAL ---
+        const inputCP = document.getElementById('codigo_postal_usuario');
+        inputCP?.addEventListener('input', async (e) => {
+            const cp = e.target.value;
+            if (cp.length === 5) {
+                try {
+                    const res = await fetch('./data/codepostalmexico.json');
+                    const data = await res.json();
+                    const registro = data.find(item => item.d_codigo === cp);
+                    if (registro) {
+                        document.getElementById('colonia_usuario').value = registro.d_asenta;
+                        document.getElementById('direccion_usuario').value = registro.D_mnpio;
+                    }
+                } catch (err) {
+                    console.error("Error al cargar CP:", err);
+                }
+            }
+        });
+
+        // --- C. REGISTRO DE COMPRA (FIREBASE) ---
+        const btnEnviar = document.querySelector('input[value="Enviar"]');
+        btnEnviar?.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            // Validamos que el nombre no esté vacío
+            const nombreCliente = document.getElementById('nombre_usuario').value;
+            if (!nombreCliente) {
+                alert("Por favor, completa tu nombre para continuar.");
+                return;
+            }
+
+            btnEnviar.disabled = true;
+            btnEnviar.value = "Procesando...";
+
+            const pedido = {
+                cliente: nombreCliente,
+                email: document.getElementById('emal_usuario').value,
+                telefono: document.getElementById('telefono_usuario').value,
+                cp: document.getElementById('codigo_postal_usuario').value,
+                colonia: document.getElementById('colonia_usuario').value,
+                municipio: document.getElementById('direccion_usuario').value,
+                producto: product.name,
+                variante: product.variant,
+                cantidad: product.quantity,
+                total: totalCalculado,
+                fecha: new Date().toLocaleString('es-MX')
+            };
+
+            try {
+                await addDoc(collection(db, "pedidos"), pedido);
+                // Mostrar Modal de éxito
+                document.getElementById('modal_exito')?.classList.remove('hidden');
+            } catch (error) {
+                alert("Error al registrar la compra: " + error.message);
+                btnEnviar.disabled = false;
+                btnEnviar.value = "Enviar";
+            }
+        });
+    });
+
+    // --- D. FUNCIÓN PARA CERRAR MODAL Y VOLVER A TIENDA ---
+    window.cerrarModal = () => {
+        document.getElementById('modal_exito')?.classList.add('hidden');
+        localStorage.removeItem('selectedProduct'); // Limpiamos para nueva compra
+        window.location.href = 'store-test.html';
+    };
+</script>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <meta name="description" content="">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <section id="secc_detalles_produc" class="mt-4 mb-4 ml-auto mr-auto">
+        <div class="flex p-4">
+            <div class="flex w-full">
+                <div id="details_product" class="w-2/3 p-4 m-1 bg-gray-200 rounded-xl shadow-md">
+                    <h2>
+                        Detalles de producto
+                    </h2>
+                    <div class="flex flex-col md:flex-row">
+                        <div class="w-2/3">
+                           <img  id="imagen_product_cart" class="rounded-md w-2/4"  src="/images/audifonos-bluetooth-multipunto-anc.webp" alt="Aqui ira la imagen del producto"> 
+                           <h3 id="name_product_cart" class="text-base font-medium mt-2 mb-2 text-black">
+                              Nombre del producto 
+                           </h3>
+                           <p id="price_product_cart" class="text-base font-medium mt-2 mb-2 text-black">
+                              $1200
+                           </p>
+                           <p id="option_product_cart" class="text-base font-medium mt-2 mb-2 text-black">
+                             Option del producto
+                           </p>
+                        </div>
+                        <div class="w-1/3">
+                            <div>
+                                <button id="btn_menos" class="bg-gray-500 text-white p-2 rounded-md">
+                                    -
+                                </button>
+                                   <span id="count_block" class="p-2 bg-white border-black-300 rounded-md ml-2 mr-2">
+                                      0
+                                   </span>
+                                <button id="btn_mas" class="bg-gray-500 text-white p-2 rounded-md">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="details_producto_cart" class="w-1/3 p-4 m-1 bg-gray-200 rounded-xl shadow-md">
+                   <h2>
+                      Resumen de la compra y productos
+                   </h2>
+                   <div class="mt-4 mb-4">
+                       <h3 class="text-lg font-medium ">
+                          Total de la compra:
+                          <p id="nombre_total_products" class="mt-2 mb-2 text-md font-medium">
+                             Nombre del producto
+                          </p>
+                          <p id="precio_total_products" class="mt-2 mb-2 text-md font-medium"> 
+                             $1500 
+                          </p>
+                          <p id="total_option_products" class="mt-2 mb-2 text-md font-medium">
+                            Opcion talla del producto
+                          </p>
+                       </h3>
+                   </div>
+                   <button id="finalizar_compra" class="w-full bg-black text-white font-medium text-base text-center p-2 mt-2 mb-2 rounded-xl hover:bg-white hover:text-black ease-linear transition">
+                      Finalizar compra
+                   </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    
+    if (!product) {
+        console.warn("No hay producto en el carrito");
+        return;
+    }
+
+    // --- REFERENCIAS AL DOM ---
+    // Detalle del producto (Izquierda)
+    const nameDisplay = document.getElementById('name_product_cart');
+    const priceDisplay = document.getElementById('price_product_cart');
+    const imageDisplay = document.getElementById('imagen_product_cart');
+    const variantDisplay = document.getElementById('option_product_cart');
+    const countDisplay = document.getElementById('count_block');
+
+    // Resumen de compra (Derecha - Los que me pasaste)
+    const summaryName = document.getElementById('nombre_total_products');
+    const summaryTotal = document.getElementById('precio_total_products');
+    const summaryOption = document.getElementById('total_option_products');
+
+    // Botones
+    const btnMas = document.getElementById('btn_mas');
+    const btnMenos = document.getElementById('btn_menos');
+    const btnFinalizar = document.getElementById('finalizar_compra');
+
+    // --- FUNCIÓN DE ACTUALIZACIÓN ---
+    const updateSummary = () => {
+        const totalCalculado = product.price * product.quantity;
+        const formatoPrecio = `$${totalCalculado.toLocaleString('es-MX')}`;
+        
+        // Actualizar contador central
+        if(countDisplay) countDisplay.innerText = product.quantity;
+        
+        // Actualizar Resumen Lateral (Tus IDs específicos)
+        if(summaryName) summaryName.innerText = `${product.name} (x${product.quantity})`;
+        if(summaryTotal) summaryTotal.innerText = formatoPrecio;
+        if(summaryOption) summaryOption.innerText = `Opción: ${product.variant}`;
+        
+        // Guardar cambios para la siguiente página
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+    };
+
+    // --- CARGA INICIAL DE DATOS ---
+    if(nameDisplay) nameDisplay.innerText = product.name;
+    if(priceDisplay) priceDisplay.innerText = `$${product.price.toLocaleString('es-MX')}`;
+    if(imageDisplay) imageDisplay.src = product.image;
+    if(variantDisplay) variantDisplay.innerText = `Seleccionaste: ${product.variant}`;
+
+    // --- EVENTOS ---
+    if (btnMas) {
+        btnMas.onclick = () => {
+            product.quantity++;
+            updateSummary();
+        };
+    }
+
+    if (btnMenos) {
+        btnMenos.onclick = () => {
+            if (product.quantity > 1) {
+                product.quantity--;
+                updateSummary();
+            }
+        };
+    }
+
+    if (btnFinalizar) {
+        btnFinalizar.onclick = () => {
+            window.location.href = 'finalizar_compra.html';
+        };
+    }
+
+    // Ejecutar al cargar la página
+    updateSummary();
+});
+</script>
