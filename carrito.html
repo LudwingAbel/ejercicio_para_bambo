@@ -80,14 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- REFERENCIAS AL DOM ---
-    // Detalle del producto (Izquierda)
+    // Detalle del producto
     const nameDisplay = document.getElementById('name_product_cart');
     const priceDisplay = document.getElementById('price_product_cart');
     const imageDisplay = document.getElementById('imagen_product_cart');
     const variantDisplay = document.getElementById('option_product_cart');
     const countDisplay = document.getElementById('count_block');
 
-    // Resumen de compra (Derecha - Los que me pasaste)
+    // Resumen de compra
     const summaryName = document.getElementById('nombre_total_products');
     const summaryTotal = document.getElementById('precio_total_products');
     const summaryOption = document.getElementById('total_option_products');
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Actualizar contador central
         if(countDisplay) countDisplay.innerText = product.quantity;
         
-        // Actualizar Resumen Lateral (Tus IDs específicos)
+        // Actualizar Resumen Lateral (Con los IDs específicos para esa seccion)
         if(summaryName) summaryName.innerText = `${product.name} (x${product.quantity})`;
         if(summaryTotal) summaryTotal.innerText = formatoPrecio;
         if(summaryOption) summaryOption.innerText = `Opción: ${product.variant}`;
